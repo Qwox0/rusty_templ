@@ -1,12 +1,8 @@
-mod lexer;
-
 pub use macros::*;
-use std::fmt::Display;
 
 pub trait Template {
     fn render(&self) -> String;
 }
-
 
 /*
 #[derive(Debug, thiserror::Error)]
@@ -27,6 +23,7 @@ impl Template {
 }
 */
 
+/*
 const TAG: &str = "div";
 const TEST: bool = true;
 
@@ -34,7 +31,6 @@ pub fn format(text: impl Display) -> String {
     format!("<div>Text: {text} inside a {TAG}</div>")
 }
 
-/*
 pub fn hello_world(text: impl Display) -> String {
     templ!( Hello World "{}").to_string()
 }
