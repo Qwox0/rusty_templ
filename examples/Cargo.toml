@@ -1,0 +1,28 @@
+[package]
+name = "examples"
+version.workspace = true
+edition.workspace = true
+publish = false
+
+[dependencies]
+rusty_template = {path = "../rusty_template"}
+
+[[example]]
+name = "templ_struct"
+path = "./templ_struct.rs"
+
+[[example]]
+name = "templ_tuple_struct"
+path = "./templ_tuple_struct.rs"
+
+[[example]]
+name = "templ_fn"
+path = "./templ_fn.rs"
+
+[[example]]
+name = "from_file"
+path = "./from_file.rs"
+
+# [[example]]
+# name = "X"
+# path = "./X.rs"

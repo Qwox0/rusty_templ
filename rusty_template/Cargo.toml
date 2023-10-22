@@ -1,0 +1,8 @@
+[package]
+name = "rusty_template"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+macros.workspace = true
+thiserror.workspace = true
