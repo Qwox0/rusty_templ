@@ -16,7 +16,7 @@ pub fn expand_templ(ts: TokenStream) -> syn::Result<TokenStream2> {
     }
 
     // macros can be called with different delimiters
-    let (body_start, closing_delim) = match chars.skip_while(|c| c.1.is_whitespace()).next() {
+    let (body_start, closing_delim) = match chars.skip_while(|c| c.1.is_ascii_whitespace()).next() {
         Some((pos, '{')) => (pos + 1, '}'), // templ! { ... }
         Some((pos, '(')) => (pos + 1, ')'), // templ!(...);
         Some((pos, '[')) => (pos + 1, ']'), // templ![...];

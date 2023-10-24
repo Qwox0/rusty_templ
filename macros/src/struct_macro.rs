@@ -1,11 +1,8 @@
 use crate::{attribute::TemplateAttribute, syn_bail::syn_bail};
-use proc_macro::{Delimiter, Group, Span, TokenStream, TokenTree};
-use proc_macro2::{Literal, Span as Span2, TokenStream as TokenStream2, TokenTree as TokenTree2};
+use proc_macro::TokenStream;
+use proc_macro2::{Span as Span2, TokenStream as TokenStream2, TokenTree as TokenTree2};
 use quote::{format_ident, quote, ToTokens};
-use syn::{
-    parse_macro_input, punctuated::Punctuated, Attribute, DataStruct, DeriveInput, ExprLit,
-    ItemStruct, Lit, LitStr, Meta, Token,
-};
+use syn::{Attribute, DataStruct, DeriveInput, ExprLit, ItemStruct, Lit, Meta};
 
 pub fn expand_template(attr: TokenStream, item: ItemStruct) -> TokenStream {
     let attr: TokenStream2 = attr.into();
