@@ -31,12 +31,12 @@ pub fn expand_templ(ts: TokenStream) -> syn::Result<TokenStream2> {
     let end = text.len() - 1;
     let macro_body = text[body_start..end].trim();
 
-    let _out = parsing::parse(ts, macro_body);
+    let items = parsing::parse(ts, macro_body);
 
     Ok(quote! {
         {
             let mut template = String::new();
-            //template.push_str(#lit);
+            #items
             template
         }
     })
