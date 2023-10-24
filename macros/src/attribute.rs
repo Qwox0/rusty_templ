@@ -10,6 +10,6 @@ impl TryFrom<TokenStream2> for TemplateAttribute {
 
     fn try_from(attr: TokenStream2) -> Result<Self, Self::Error> {
         println!("attr: {}", attr);
-        todo!()
+        todo!("TryFrom<TokenStream2> for TemplateAttribute")
     }
 }

@@ -101,9 +101,3 @@ impl<'a> Parser<'a> {
         }
     }
 }
-
-impl<'a> ToTokens for Parser<'a> {
-    fn to_tokens(&self, tokens: &mut TokenStream2) {
-        todo!()
-    }
-}

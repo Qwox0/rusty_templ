@@ -35,15 +35,15 @@ pub fn expand_derive_template(input: DeriveInput) -> syn::Result<TokenStream2> {
     }
 
     let attr = match attr.meta {
-        Meta::Path(_) => todo!(),  // #[template]
+        Meta::Path(_) => todo!("Meta::Path"),  // #[template]
         Meta::List(m) => m.tokens, // #[template(...)]
         Meta::NameValue(m) => {
             let l = match m.value {
                 syn::Expr::Lit(ExprLit { lit: Lit::Str(lit), .. }) => lit.parse::<TokenTree2>(),
-                _ => todo!(),
+                _ => todo!("Meta not a LitStr"),
             };
             println!("l: {:?}", l);
-            todo!()
+            todo!("Meta::NameValue")
         }, // #[template = ...]
     };
 

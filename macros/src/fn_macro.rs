@@ -7,6 +7,7 @@ pub fn expand_templ(ts: TokenStream) -> syn::Result<TokenStream2> {
     // `Span2::mixed_site()` should give the same text.
     let macro_span = Span2::call_site();
     let Some(text) = macro_span.source_text() else {
+        panic!("{:?}", macro_span);
         syn_bail!(macro_span => "Span doesn't correspond to real source code")
     };
 

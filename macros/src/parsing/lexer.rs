@@ -33,7 +33,7 @@ impl Token {
             Token::Text { pos, len } => pos + len,
             Token::Whitespace { pos, len } => pos + len,
             Token::Newline { pos, len } => pos + len,
-            Token::Expr { .. } => todo!(),
+            Token::Expr { .. } => panic!("no get_end for Token::Expr")
         }
     }
 
@@ -126,8 +126,8 @@ impl<'a> Lexer<'a> {
                 self.pos += span.len();
                 Token::Expr { pos, ts: g.stream(), span }
             },
-            TT::Group(_) => todo!(),
-            TT::Literal(_) => todo!(),
+            TT::Group(_) => todo!("Lexer: TT::Group"),
+            TT::Literal(_) => todo!("Lexer: TT::Literal"),
         })
     }
 
