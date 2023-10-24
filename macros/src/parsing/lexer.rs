@@ -1,5 +1,6 @@
 use crate::parsing::span_len::SpanLen;
 use proc_macro::{token_stream, Delimiter, Group, TokenStream};
+use std::iter::FusedIterator;
 
 #[derive(Debug)]
 pub enum Token {
@@ -14,15 +15,31 @@ pub enum Token {
 /// # Example
 ///
 /// ```
-/// text: "Hello  { name }!"
+/// text:        "Hello  { name }!"
 ///
-/// ts:    ^^^^^  ^^^^^^^^
-///        Ident   Group  ^Punct
+/// ts:           ^^^^^  ^^^^^^^^
+///               Ident   Group  ^Punct
 ///
-/// Token: ^^^^^  ^^^^^^^^
-///        Text ^^  Expr  ^Text
-///             Whitespace
+/// Lexer output: ^^^^^  ^^^^^^^^
+///               Text ^^  Expr  ^Text
+///                    Whitespace
 /// ```
+///
+/// # [`Iterator`] Note
+///
+/// [`proc_macro::token_stream::IntoIter`] only contains a single
+/// [`std::vec::IntoIter`] which implements all four Iterator traits
+///
+/// * [`Iterator`]
+/// * [`DoubleEndedIterator`]
+/// * [`ExactSizeIterator`]
+/// * [`FusedIterator`]
+///
+/// for any generic type `T`. See <https://doc.rust-lang.org/src/proc_macro/lib.rs.html#364-372>.
+///
+/// This means that [`proc_macro::token_stream::IntoIter`] could/should also
+/// implement all the taits above. This assumption is used for the
+/// implementation of [`Iterator::size_hint`] and [`FusedIterator`].
 #[derive(Clone)]
 pub struct Lexer<'a> {
     ts: token_stream::IntoIter,
@@ -118,14 +135,14 @@ impl<'a> Iterator for Lexer<'a> {
     }
 
     fn size_hint(&self) -> (usize, Option<usize>) {
-        let ts_hint = self.ts.size_hint();
-        // `self.ts` should be a `ExactSizeIterator` -> this can be improved.
-        // But I'm not 100% sure.
-
-        // Text before first and after end is ignored.
-        (ts_hint.0, ts_hint.1.map(|upper| upper * 2 - 1))
+        // see "Iterator Note" on [`Lexer`].
+        let ts_size = self.ts.size_hint().0;
+        // There *might* be whitespace [`Token`]s between the elements of `ts`.
+        (ts_size, ts_size.checked_mul(2).map(|x| x.saturating_sub(1)))
     }
 }
+
+impl<'a> FusedIterator for Lexer<'a> {}
 
 fn is_brace(g: &Group) -> bool {
     g.delimiter() == Delimiter::Brace

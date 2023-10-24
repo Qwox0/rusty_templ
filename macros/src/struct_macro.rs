@@ -62,17 +62,13 @@ pub fn impl_template(attr: TemplateAttribute, item: ItemStruct) -> syn::Result<T
 
     let struct_name = &item.ident;
 
-    let fields = item
-        .fields
-        .iter()
-        .enumerate()
-        .map(|(idx, field)| match &field.ident {
-            Some(f) => f.into_token_stream(),
-            None => {
-                let var = format_ident!("_{idx}");
-                quote!(#idx : #var)
-            },
-        });
+    let fields = item.fields.iter().enumerate().map(|(idx, field)| match &field.ident {
+        Some(f) => f.into_token_stream(),
+        None => {
+            let var = format_ident!("_{idx}");
+            quote!(#idx : #var)
+        },
+    });
 
     println!("item: `{}`", item.to_token_stream().to_string());
     println!("attrs: `{:?}`", attr);
