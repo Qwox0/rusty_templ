@@ -1,6 +1,5 @@
 [workspace]
 members = [
-    "rusty_template",
     "macros",
 
     # ---
@@ -13,6 +12,15 @@ version = "0.1.0"
 edition = "2021"
 
 [workspace.dependencies]
-rusty_template = { path = "./rusty_template" }
+rusty_template = { path = "." }
 macros = { path = "./macros" }
 thiserror = "1.0"
+
+[package]
+name = "rusty_template"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+macros.workspace = true
+thiserror.workspace = true

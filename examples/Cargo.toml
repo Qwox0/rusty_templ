@@ -5,7 +5,7 @@ edition.workspace = true
 publish = false
 
 [dependencies]
-rusty_template = {path = "../rusty_template"}
+rusty_template.workspace = true
 
 [[example]]
 name = "templ_struct"
