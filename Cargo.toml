@@ -24,3 +24,6 @@ edition.workspace = true
 [dependencies]
 macros.workspace = true
 thiserror.workspace = true
+
+[features]
+stable = ["macros/stable"]

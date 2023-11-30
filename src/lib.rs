@@ -1,3 +1,6 @@
+#![doc = include_str!("../README.md")]
+
+// #[cfg(not(feature = "stable"))]
 pub use macros::*;
 
 pub trait Template {
